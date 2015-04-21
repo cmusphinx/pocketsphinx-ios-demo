@@ -16,6 +16,7 @@ CWD=`pwd`
 
 for ARCH in $ARCHS
 do
+	SPHINXBASE_DIR=`pwd`/../sphinxbase/bin/$ARCH
 	echo "building $ARCH..."
 	mkdir -p "$SCRATCH/$ARCH"
 	cd "$SCRATCH/$ARCH"
@@ -40,6 +41,9 @@ do
 	$CWD/configure \
 	    --host="${ARCH}-apple-darwin" \
 	    --prefix="$DEST/$ARCH" \
+	    --without-lapack \
+	    --without-swig-python \
+	    --with-sphinxbase="$SPHINXBASE_DIR" \
 	|| exit 1
 
 	make -j3 install $EXPORT || exit 1
