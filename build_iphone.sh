@@ -42,7 +42,7 @@ do
 	    --host="${ARCH}-apple-darwin" \
 	    --prefix="$DEST/$ARCH" \
 	    --without-lapack \
-	    --without-swig-python \
+	    --without-python \
 	    --with-sphinxbase="$SPHINXBASE_DIR" \
 	|| exit 1
 
