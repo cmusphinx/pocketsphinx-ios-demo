@@ -5,8 +5,6 @@ DEST=`pwd`/"bin"
 
 ARCHS="arm64 armv7 x86_64 i386"
 
-DEPLOYMENT_TARGET="6.0"
-
 if [ "$*" ]
 then
 	ARCHS="$*"
@@ -21,12 +19,10 @@ do
 	mkdir -p "$SCRATCH/$ARCH"
 	cd "$SCRATCH/$ARCH"
 
-	MIN_IOS_VERSION="${DEPLOYMENT_TARGET}"
+	MIN_IOS_VERSION="6.0"
 	if [[ "${ARCH}" == "arm64" || "${ARCH}" == "x86_64" ]]; then
-        MIN_IOS_VERSION=7.0 # 7.0 as this is the minimum for these architectures
-    elif [ "${ARCH}" == "i386" ]; then
-        MIN_IOS_VERSION=6.0 # 6.0 to prevent start linking errors
-    fi
+            MIN_IOS_VERSION="7.0" # 7.0 as this is the minimum for these architectures
+	fi
 
 	if [ "$ARCH" = "i386" -o "$ARCH" = "x86_64" ]
 	then
@@ -38,10 +34,10 @@ do
 	fi	
 
 	HOST_TYPE="${ARCH}-apple-darwin"
-    if [ "${ARCH}" == "arm64" ]; then
+	if [ "${ARCH}" == "arm64" ]; then
         # Fix unknown type for arm64 cpu (which is aarch64)
-        HOST_TYPE="aarch64-apple-darwin"
-    fi
+	    HOST_TYPE="aarch64-apple-darwin"
+	fi
 
 	export DEVELOPER=`xcode-select --print-path`
 	export DEVROOT="${DEVELOPER}/Platforms/${PLATFORM}.platform/Developer"
@@ -60,7 +56,7 @@ do
 	    --with-sphinxbase="$SPHINXBASE_DIR" \
 	|| exit 1
 
-	make -j3 install $EXPORT || exit 1
+	make -j3 install || exit 1
 	cd $CWD
 done
 
