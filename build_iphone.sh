@@ -60,4 +60,17 @@ do
 	cd $CWD
 done
 
+PROJECT=$(basename $PWD)
+
+if [ ! "$*" ]
+then
+	LIPO_ARGS="-output $DEST/fat/lib/lib$PROJECT.a"
+	mkdir -p "$DEST/fat/lib"
+	for ARCH in $ARCHS
+	do
+		LIPO_ARGS="$LIPO_ARGS $DEST/$ARCH/lib/lib$PROJECT.a"
+	done
+	lipo -create $LIPO_ARGS
+fi
+
 echo Done
