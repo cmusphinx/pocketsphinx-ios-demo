@@ -30,7 +30,7 @@ do
 	    IOS_CFLAGS="-arch $ARCH -mios-simulator-version-min=$MIN_IOS_VERSION"
 	else
 	    PLATFORM="iPhoneOS"
-	    IOS_CFLAGS="-arch $ARCH -mios-version-min=$MIN_IOS_VERSION"
+	    IOS_CFLAGS="-arch $ARCH -mios-version-min=$MIN_IOS_VERSION -fembed-bitcode"
 	fi	
 
 	HOST_TYPE="${ARCH}-apple-darwin"
